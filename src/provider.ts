@@ -1,7 +1,7 @@
 import MessageChannel from "./lib/messageChannel";
 import Messenger from "./messager";
 import EventEmitter from 'eventemitter3';
-import {DAppActions} from "./constant";
+import { DAppActions } from "./constant";
 
 /**
  * code 4001 The request was rejected by the user
@@ -23,24 +23,26 @@ interface RequestArguments {
   params?: unknown[] | object;
 }
 
-export interface SendPaymentArguments {
-  to: string,
-  amount: number,
-  memo?:string
-}
-
-export interface SendStakeDelegationArguments {
-  to: string,
-  memo?:string
+export interface Transaction {
+  hash?: string;
+  from: string;
+  to: string;
+  type?: string;
+  timestamp?: number;
+  value?: number;
+  signature?: string;
+  data?: string | Array<string | Array<string> | number>;
+  hex?: string;
+  extra?: string;
+  extraIdInt64?: Array<number>;
+  extraIdString?: Array<string>
+  payload?: string;
 }
 
 interface SignedData {
   publicKey: string,
   payload: string,
-  signature: {
-    field: string,
-    scalar: string
-  }
+  signature: string
 }
 
 export interface SignMessageArguments {
@@ -51,16 +53,20 @@ export interface VerifyMessageArguments extends SignedData {
 
 }
 
+export interface TransactionArguments extends Transaction {
+
+}
+
 type ConnectListener = (connectInfo: ConnectInfo) => void
 type ChainChangedListener = (chainId: string) => void
 type AccountsChangedListener = (accounts: string[]) => void
 
-export interface IMinaProvider {
+export interface IHyperProvider {
   request(args: RequestArguments): Promise<unknown>
   isConnected(): boolean
-  sendPayment(args: SendPaymentArguments): Promise<{ hash: string }>
-  sendStakeDelegation(args: SendStakeDelegationArguments): Promise<{ hash: string }>
-  signMessage(args: SignMessageArguments): Promise<SignedData>
+  signTransaction(args: TransactionArguments): Promise<Transaction>
+  sendTransaction(args: TransactionArguments): Promise<{ hash: string }>
+  signMessage(args: SignMessageArguments): Promise<string>
   verifyMessage(args: VerifyMessageArguments): Promise<boolean>
   requestAccounts(): Promise<string[]>
   requestNetwork(): Promise<string>
@@ -84,7 +90,7 @@ export interface IMinaProvider {
 }
 
 
-export default class HyperWeb3Provider extends EventEmitter implements IMinaProvider{
+export default class HyperWeb3Provider extends EventEmitter implements IHyperProvider {
   private readonly channel: MessageChannel;
   private readonly messenger: Messenger;
   public readonly isHyper: boolean = true;
@@ -96,7 +102,7 @@ export default class HyperWeb3Provider extends EventEmitter implements IMinaProv
     this.initEvents();
   }
 
-  public request({method, params}: RequestArguments): Promise<any> {
+  public request({ method, params }: RequestArguments): Promise<any> {
     return this.messenger.send(method, params)
   }
 
@@ -104,28 +110,28 @@ export default class HyperWeb3Provider extends EventEmitter implements IMinaProv
     return this.connectedFlag;
   }
 
-  public async sendPayment(args: SendPaymentArguments): Promise<{ hash: string }>  {
-    return this.request({method: DAppActions.hyper_sendPayment, params: args})
+  public async signTransaction(args: Transaction): Promise<Transaction> {
+    return this.request({ method: DAppActions.HYPER_SIGN_TRANSACTION, params: args })
   }
 
-  public async sendStakeDelegation(args: SendStakeDelegationArguments): Promise<{ hash: string }> {
-    return this.request({method: DAppActions.hyper_sendStakeDelegation, params: args})
+  public async sendTransaction(args: Transaction): Promise<{ hash: string }> {
+    return this.request({ method: DAppActions.HYPER_SEND_TRANSACTION, params: args })
   }
 
-  public async signMessage(args: SignMessageArguments): Promise<SignedData> {
-    return this.request({method: DAppActions.hyper_signMessage, params: args})
+  public async signMessage(args: SignMessageArguments): Promise<string> {
+    return this.request({ method: DAppActions.HYPER_SIGN_MESSAGE, params: args })
   }
 
-  public async verifyMessage(args: VerifyMessageArguments): Promise<boolean>{
-    return this.request({method: DAppActions.hyper_verifyMessage, params: args})
+  public async verifyMessage(args: VerifyMessageArguments): Promise<boolean> {
+    return this.request({ method: DAppActions.HYPER_VERIFY_MESSAGE, params: args })
   }
 
   public async requestAccounts(): Promise<string[]> {
-    return this.request({method: DAppActions.hyper_requestAccounts})
+    return this.request({ method: DAppActions.HYPER_REQUEST_ACCOUNTS })
   }
 
   public async requestNetwork(): Promise<'Mainnet' | 'Devnet' | 'Unhnown'> {
-    return this.request({method: DAppActions.hyper_requestNetwork})
+    return this.request({ method: DAppActions.HYPER_REQUEST_NETWORK })
   }
 
   private initEvents() {
