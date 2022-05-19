@@ -1,42 +1,38 @@
 /**
  * dapp request connect
  */
-export const hyper_requestAccounts = "hyper_requestAccounts"
-
-/**
- * dapp send transfer
- */
-export const hyper_sendPayment = "hyper_sendPayment"
-
-
-/**
- * dapp add escrow
- */
-export const hyper_sendStakeDelegation = "hyper_sendStakeDelegation"
-
-
-/**
- * dapp add escrow
- */
-export const hyper_signMessage = "hyper_signMessage"
-
-
-/**
- * verify message
- */
-export const hyper_verifyMessage = "hyper_verifyMessage"
+export const HYPER_REQUEST_ACCOUNTS = "hyper_requestAccounts"
 
 /**
  * reuqest network
  */
-export const hyper_requestNetwork = "hyper_requestNetwork"
+export const HYPER_REQUEST_NETWORK = "hyper_requestNetwork"
 
+/**
+ * dapp sign transacton
+ */
+export const HYPER_SIGN_TRANSACTION = "hyper_signTransaction"
+
+/**
+ * dapp send transaction
+ */
+export const HYPER_SEND_TRANSACTION = "hyper_sendTransaction"
+
+/**
+ * dapp sign message 
+ */
+export const HYPER_SIGN_MESSAGE = "hyper_signMessage"
+
+/**
+ * verify message
+ */
+export const HYPER_VERIFY_MESSAGE = "hyper_verifyMessage"
 
 export const DAppActions = {
-  hyper_requestAccounts,
-  hyper_sendPayment,
-  hyper_sendStakeDelegation,
-  hyper_signMessage,
-  hyper_verifyMessage,
-  hyper_requestNetwork
+  HYPER_REQUEST_ACCOUNTS,
+  HYPER_REQUEST_NETWORK,
+  HYPER_SIGN_TRANSACTION,
+  HYPER_SEND_TRANSACTION,
+  HYPER_SIGN_MESSAGE,
+  HYPER_VERIFY_MESSAGE
 }
