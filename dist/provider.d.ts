@@ -6,41 +6,47 @@ interface RequestArguments {
     method: string;
     params?: unknown[] | object;
 }
-export interface SendPaymentArguments {
+export interface Transaction {
+    from: string;
     to: string;
-    amount: number;
-    memo?: string;
-}
-export interface SendStakeDelegationArguments {
-    to: string;
-    memo?: string;
+    hash?: string;
+    type?: string;
+    timestamp?: number;
+    value?: number;
+    payload?: string;
+    opCode?: number;
+    simulate?: boolean;
+    contractName?: string;
+    extra?: string;
+    extraIdInt64?: Array<number>;
+    extraIdLong?: Array<number>;
+    extraIdString?: Array<string>;
+    hex?: string;
+    signature?: string;
 }
 interface SignedData {
     publicKey: string;
     payload: string;
-    signature: {
-        field: string;
-        scalar: string;
-    };
+    signature: string;
 }
 export interface SignMessageArguments {
     message: string;
 }
 export interface VerifyMessageArguments extends SignedData {
 }
+export interface TransactionArguments extends Transaction {
+}
 declare type ConnectListener = (connectInfo: ConnectInfo) => void;
 declare type ChainChangedListener = (chainId: string) => void;
 declare type AccountsChangedListener = (accounts: string[]) => void;
-export interface IMinaProvider {
+export interface IHyperProvider {
     request(args: RequestArguments): Promise<unknown>;
     isConnected(): boolean;
-    sendPayment(args: SendPaymentArguments): Promise<{
+    signTransaction(args: TransactionArguments): Promise<Transaction>;
+    sendTransaction(args: TransactionArguments): Promise<{
         hash: string;
     }>;
-    sendStakeDelegation(args: SendStakeDelegationArguments): Promise<{
-        hash: string;
-    }>;
-    signMessage(args: SignMessageArguments): Promise<SignedData>;
+    signMessage(args: SignMessageArguments): Promise<string>;
     verifyMessage(args: VerifyMessageArguments): Promise<boolean>;
     requestAccounts(): Promise<string[]>;
     requestNetwork(): Promise<string>;
@@ -53,7 +59,7 @@ export interface IMinaProvider {
     removeListener(eventName: 'chainChanged', listener: ChainChangedListener): this;
     removeListener(eventName: 'accountsChanged', listener: AccountsChangedListener): this;
 }
-export default class HyperWeb3Provider extends EventEmitter implements IMinaProvider {
+export default class HyperWeb3Provider extends EventEmitter implements IHyperProvider {
     private readonly channel;
     private readonly messenger;
     readonly isHyper: boolean;
@@ -61,13 +67,11 @@ export default class HyperWeb3Provider extends EventEmitter implements IMinaProv
     constructor(channelKey: string);
     request({ method, params }: RequestArguments): Promise<any>;
     isConnected(): boolean;
-    sendPayment(args: SendPaymentArguments): Promise<{
+    signTransaction(args: Transaction): Promise<Transaction>;
+    sendTransaction(args: Transaction): Promise<{
         hash: string;
     }>;
-    sendStakeDelegation(args: SendStakeDelegationArguments): Promise<{
-        hash: string;
-    }>;
-    signMessage(args: SignMessageArguments): Promise<SignedData>;
+    signMessage(args: SignMessageArguments): Promise<string>;
     verifyMessage(args: VerifyMessageArguments): Promise<boolean>;
     requestAccounts(): Promise<string[]>;
     requestNetwork(): Promise<'Mainnet' | 'Devnet' | 'Unhnown'>;

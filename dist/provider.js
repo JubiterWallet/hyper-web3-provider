@@ -70,45 +70,45 @@ var HyperWeb3Provider = /** @class */ (function (_super) {
     HyperWeb3Provider.prototype.isConnected = function () {
         return this.connectedFlag;
     };
-    HyperWeb3Provider.prototype.sendPayment = function (args) {
+    HyperWeb3Provider.prototype.signTransaction = function (args) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_sendPayment, params: args })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_SIGN_TRANSACTION, params: args })];
             });
         });
     };
-    HyperWeb3Provider.prototype.sendStakeDelegation = function (args) {
+    HyperWeb3Provider.prototype.sendTransaction = function (args) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_sendStakeDelegation, params: args })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_SEND_TRANSACTION, params: args })];
             });
         });
     };
     HyperWeb3Provider.prototype.signMessage = function (args) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_signMessage, params: args })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_SIGN_MESSAGE, params: args })];
             });
         });
     };
     HyperWeb3Provider.prototype.verifyMessage = function (args) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_verifyMessage, params: args })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_VERIFY_MESSAGE, params: args })];
             });
         });
     };
     HyperWeb3Provider.prototype.requestAccounts = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_requestAccounts })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_REQUEST_ACCOUNTS })];
             });
         });
     };
     HyperWeb3Provider.prototype.requestNetwork = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                return [2 /*return*/, this.request({ method: DAppActions.hyper_requestNetwork })];
+                return [2 /*return*/, this.request({ method: DAppActions.HYPER_REQUEST_NETWORK })];
             });
         });
     };

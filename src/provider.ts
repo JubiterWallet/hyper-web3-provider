@@ -24,19 +24,22 @@ interface RequestArguments {
 }
 
 export interface Transaction {
-  hash?: string;
   from: string;
   to: string;
+  hash?: string;
   type?: string;
   timestamp?: number;
   value?: number;
-  signature?: string;
-  data?: string | Array<string | Array<string> | number>;
-  hex?: string;
+  payload?: string;
+  opCode?: number;
+  simulate?: boolean;
+  contractName?: string;
   extra?: string;
   extraIdInt64?: Array<number>;
-  extraIdString?: Array<string>
-  payload?: string;
+  extraIdLong?: Array<number>;
+  extraIdString?: Array<string>;
+  hex?: string;
+  signature?: string;
 }
 
 interface SignedData {

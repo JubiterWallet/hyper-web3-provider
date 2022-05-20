@@ -1,32 +1,32 @@
 /**
  * dapp request connect
  */
-export var hyper_requestAccounts = "hyper_requestAccounts";
-/**
- * dapp send transfer
- */
-export var hyper_sendPayment = "hyper_sendPayment";
-/**
- * dapp add escrow
- */
-export var hyper_sendStakeDelegation = "hyper_sendStakeDelegation";
-/**
- * dapp add escrow
- */
-export var hyper_signMessage = "hyper_signMessage";
-/**
- * verify message
- */
-export var hyper_verifyMessage = "hyper_verifyMessage";
+export var HYPER_REQUEST_ACCOUNTS = "hyper_requestAccounts";
 /**
  * reuqest network
  */
-export var hyper_requestNetwork = "hyper_requestNetwork";
+export var HYPER_REQUEST_NETWORK = "hyper_requestNetwork";
+/**
+ * dapp sign transacton
+ */
+export var HYPER_SIGN_TRANSACTION = "hyper_signTransaction";
+/**
+ * dapp send transaction
+ */
+export var HYPER_SEND_TRANSACTION = "hyper_sendTransaction";
+/**
+ * dapp sign message
+ */
+export var HYPER_SIGN_MESSAGE = "hyper_signMessage";
+/**
+ * verify message
+ */
+export var HYPER_VERIFY_MESSAGE = "hyper_verifyMessage";
 export var DAppActions = {
-    hyper_requestAccounts: hyper_requestAccounts,
-    hyper_sendPayment: hyper_sendPayment,
-    hyper_sendStakeDelegation: hyper_sendStakeDelegation,
-    hyper_signMessage: hyper_signMessage,
-    hyper_verifyMessage: hyper_verifyMessage,
-    hyper_requestNetwork: hyper_requestNetwork
+    HYPER_REQUEST_ACCOUNTS: HYPER_REQUEST_ACCOUNTS,
+    HYPER_REQUEST_NETWORK: HYPER_REQUEST_NETWORK,
+    HYPER_SIGN_TRANSACTION: HYPER_SIGN_TRANSACTION,
+    HYPER_SEND_TRANSACTION: HYPER_SEND_TRANSACTION,
+    HYPER_SIGN_MESSAGE: HYPER_SIGN_MESSAGE,
+    HYPER_VERIFY_MESSAGE: HYPER_VERIFY_MESSAGE
 };
