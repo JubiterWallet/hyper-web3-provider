@@ -36,9 +36,14 @@ export interface VerifyMessageArguments extends SignedData {
 }
 export interface TransactionArguments extends Transaction {
 }
+export interface Account {
+    address: string;
+    publicKey: string;
+    didAddress: string;
+}
 declare type ConnectListener = (connectInfo: ConnectInfo) => void;
 declare type ChainChangedListener = (chainId: string) => void;
-declare type AccountsChangedListener = (accounts: string[]) => void;
+declare type AccountsChangedListener = (accounts: Account[]) => void;
 export interface IHyperProvider {
     request(args: RequestArguments): Promise<unknown>;
     isConnected(): boolean;
@@ -48,7 +53,7 @@ export interface IHyperProvider {
     }>;
     signMessage(args: SignMessageArguments): Promise<string>;
     verifyMessage(args: VerifyMessageArguments): Promise<boolean>;
-    requestAccounts(): Promise<string[]>;
+    requestAccounts(): Promise<Account[]>;
     requestNetwork(): Promise<string>;
     on(eventName: 'connect', listener: ConnectListener): this;
     on(eventName: 'disconnect', listener: ConnectListener): this;
@@ -73,8 +78,8 @@ export default class HyperWeb3Provider extends EventEmitter implements IHyperPro
     }>;
     signMessage(args: SignMessageArguments): Promise<string>;
     verifyMessage(args: VerifyMessageArguments): Promise<boolean>;
-    requestAccounts(): Promise<string[]>;
-    requestNetwork(): Promise<'Mainnet' | 'Devnet' | 'Unhnown'>;
+    requestAccounts(): Promise<Account[]>;
+    requestNetwork(): Promise<'RedCave' | 'Unhnown'>;
     private initEvents;
     private onConnect;
     private onDisconnect;
