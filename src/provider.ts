@@ -60,9 +60,15 @@ export interface TransactionArguments extends Transaction {
 
 }
 
+export interface Account {
+  address: string;
+  publicKey: string;
+  didAddress: string;
+}
+
 type ConnectListener = (connectInfo: ConnectInfo) => void
 type ChainChangedListener = (chainId: string) => void
-type AccountsChangedListener = (accounts: string[]) => void
+type AccountsChangedListener = (accounts: Account[]) => void
 
 export interface IHyperProvider {
   request(args: RequestArguments): Promise<unknown>
@@ -71,7 +77,7 @@ export interface IHyperProvider {
   sendTransaction(args: TransactionArguments): Promise<{ hash: string }>
   signMessage(args: SignMessageArguments): Promise<string>
   verifyMessage(args: VerifyMessageArguments): Promise<boolean>
-  requestAccounts(): Promise<string[]>
+  requestAccounts(): Promise<Account[]>
   requestNetwork(): Promise<string>
 
   // Events
@@ -129,11 +135,11 @@ export default class HyperWeb3Provider extends EventEmitter implements IHyperPro
     return this.request({ method: DAppActions.HYPER_VERIFY_MESSAGE, params: args })
   }
 
-  public async requestAccounts(): Promise<string[]> {
+  public async requestAccounts(): Promise<Account[]> {
     return this.request({ method: DAppActions.HYPER_REQUEST_ACCOUNTS })
   }
 
-  public async requestNetwork(): Promise<'Mainnet' | 'Devnet' | 'Unhnown'> {
+  public async requestNetwork(): Promise< 'RedCave' | 'Unhnown'> {
     return this.request({ method: DAppActions.HYPER_REQUEST_NETWORK })
   }
 
